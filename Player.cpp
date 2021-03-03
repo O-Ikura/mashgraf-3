@@ -3,15 +3,24 @@
 Player::Player(Point pos)
     : coords(pos)
     , old_coords(coords)
+    , hit_points(100)
     , direction({false})
     , patient("../resources/player_patient.png")
-    , running(std::vector<Image*>(4))
-{
-    running[MovementDir::UP] = new Image("../resources/player_run_right.png");
-    running[MovementDir::RIGHT] = new Image("../resources/player_run_right.png");
-    running[MovementDir::DOWN] = new Image("../resources/player_run_left.png");
-    running[MovementDir::LEFT] = new Image("../resources/player_run_left.png");
-}
+    , run_right(true, 0, std::vector<Image*>(
+        {
+            new Image("../resources/player_run_right_1.png"),
+            new Image("../resources/player_run_right_2.png"),
+            new Image("../resources/player_run_right_3.png"),
+        }
+    ))
+    , run_left(true, 0, std::vector<Image*>(
+        {
+            new Image("../resources/player_run_left_1.png"),
+            new Image("../resources/player_run_left_2.png"),
+            new Image("../resources/player_run_left_3.png"),
+        }
+    ))
+{}
 
 bool Player::Moved()
 {
@@ -71,21 +80,31 @@ void Player::Draw(Image &screen, Image &background)
 
     Image *tmp = &patient;
     if (direction[MovementDir::UP]) {
-        tmp = running[MovementDir::UP];
+        tmp = run_left.GetImage();
+        direction[MovementDir::UP] = false;
     }
     if (direction[MovementDir::DOWN]) {
-        tmp = running[MovementDir::DOWN];
+        tmp = run_right.GetImage();
+        direction[MovementDir::DOWN] = false;
     }
     if (direction[MovementDir::RIGHT]) {
-        tmp = running[MovementDir::RIGHT];
+        tmp = run_right.GetImage();
+        direction[MovementDir::RIGHT] = false;
     }
     if (direction[MovementDir::LEFT]) {
-        tmp = running[MovementDir::LEFT];
+        tmp = run_left.GetImage();
+        direction[MovementDir::LEFT] = false;
     }
 
     for (int y = 0; y < spriteSize; ++y) {
         for (int x = 0; x < spriteSize; ++x) {
-            screen.PutPixel(x + coords.x, y + coords.y, tmp->GetPixel(x, spriteSize - y));
+            screen.PutPixel(
+                    x + coords.x,
+                    y + coords.y,
+                    blend(background.GetPixel(x + coords.x, y + coords.y), tmp->GetPixel(x, spriteSize - y - 1))
+            );
         }
     }
 }
+
+Player::~Player() {}

@@ -5,20 +5,27 @@ CMakeFiles/main.dir/glad.c.o: glad.c
 CMakeFiles/main.dir/glad.c.o: dependencies/include/GLAD/KHR/khrplatform.h
 CMakeFiles/main.dir/glad.c.o: dependencies/include/GLAD/glad/glad.h
 
+CMakeFiles/main.dir/Animation.cpp.o: Animation.cpp
+CMakeFiles/main.dir/Animation.cpp.o: Animation.h
+CMakeFiles/main.dir/Animation.cpp.o: Image.h
+
 CMakeFiles/main.dir/Image.cpp.o: Image.cpp
 CMakeFiles/main.dir/Image.cpp.o: Image.h
 CMakeFiles/main.dir/Image.cpp.o: stb_image.h
 CMakeFiles/main.dir/Image.cpp.o: stb_image_write.h
 
+CMakeFiles/main.dir/Level.cpp.o: Animation.h
 CMakeFiles/main.dir/Level.cpp.o: Image.h
 CMakeFiles/main.dir/Level.cpp.o: Level.cpp
 CMakeFiles/main.dir/Level.cpp.o: Level.h
 CMakeFiles/main.dir/Level.cpp.o: Player.h
 
+CMakeFiles/main.dir/Player.cpp.o: Animation.h
 CMakeFiles/main.dir/Player.cpp.o: Image.h
 CMakeFiles/main.dir/Player.cpp.o: Player.cpp
 CMakeFiles/main.dir/Player.cpp.o: Player.h
 
+CMakeFiles/main.dir/main.cpp.o: Animation.h
 CMakeFiles/main.dir/main.cpp.o: Image.h
 CMakeFiles/main.dir/main.cpp.o: Level.h
 CMakeFiles/main.dir/main.cpp.o: Player.h

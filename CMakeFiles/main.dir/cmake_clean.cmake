@@ -3,6 +3,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/main.dir/Image.cpp.o"
   "CMakeFiles/main.dir/Player.cpp.o"
   "CMakeFiles/main.dir/Level.cpp.o"
+  "CMakeFiles/main.dir/Animation.cpp.o"
   "CMakeFiles/main.dir/main.cpp.o"
   "bin/main.pdb"
   "bin/main"

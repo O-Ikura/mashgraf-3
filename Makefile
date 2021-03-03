@@ -123,6 +123,33 @@ main/fast:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
 .PHONY : main/fast
 
+Animation.o: Animation.cpp.o
+
+.PHONY : Animation.o
+
+# target to build an object file
+Animation.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Animation.cpp.o
+.PHONY : Animation.cpp.o
+
+Animation.i: Animation.cpp.i
+
+.PHONY : Animation.i
+
+# target to preprocess a source file
+Animation.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Animation.cpp.i
+.PHONY : Animation.cpp.i
+
+Animation.s: Animation.cpp.s
+
+.PHONY : Animation.s
+
+# target to generate assembly for a file
+Animation.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Animation.cpp.s
+.PHONY : Animation.cpp.s
+
 Image.o: Image.cpp.o
 
 .PHONY : Image.o
@@ -267,6 +294,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... main"
 	@echo "... edit_cache"
+	@echo "... Animation.o"
+	@echo "... Animation.i"
+	@echo "... Animation.s"
 	@echo "... Image.o"
 	@echo "... Image.i"
 	@echo "... Image.s"

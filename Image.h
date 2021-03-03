@@ -2,6 +2,13 @@
 #define MAIN_IMAGE_H
 
 #include <string>
+#include <iostream>
+
+struct Point
+{
+    int x;
+    int y;
+};
 
 constexpr int tileSize = 16;
 
@@ -42,6 +49,6 @@ private:
   bool self_allocated = false;
 };
 
-
-
 #endif //MAIN_IMAGE_H
+
+Pixel blend(Pixel oldPixel, Pixel newPixel);
