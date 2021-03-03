@@ -69,24 +69,22 @@ void Player::Draw(Image &screen, Image &background)
         old_coords = coords;
     }
 
-    for (int y = 0; y < spriteSize; ++y)
-    {
-        for (int x = 0; x < spriteSize; ++x)
-        {
-            Image *tmp = &patient;
-            if (direction[MovementDir::UP]) {
-                tmp = running[MovementDir::UP];
-            }
-            if (direction[MovementDir::DOWN]) {
-                tmp = running[MovementDir::DOWN];
-            }
-            if (direction[MovementDir::RIGHT]) {
-                tmp = running[MovementDir::RIGHT];
-            }
-            if (direction[MovementDir::LEFT]) {
-                tmp = running[MovementDir::LEFT];
-            }
+    Image *tmp = &patient;
+    if (direction[MovementDir::UP]) {
+        tmp = running[MovementDir::UP];
+    }
+    if (direction[MovementDir::DOWN]) {
+        tmp = running[MovementDir::DOWN];
+    }
+    if (direction[MovementDir::RIGHT]) {
+        tmp = running[MovementDir::RIGHT];
+    }
+    if (direction[MovementDir::LEFT]) {
+        tmp = running[MovementDir::LEFT];
+    }
 
+    for (int y = 0; y < spriteSize; ++y) {
+        for (int x = 0; x < spriteSize; ++x) {
             screen.PutPixel(x + coords.x, y + coords.y, tmp->GetPixel(x, spriteSize - y));
         }
     }
