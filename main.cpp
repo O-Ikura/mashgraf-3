@@ -9,7 +9,7 @@
 #define GLFW_DLL
 #include <GLFW/glfw3.h>
 
-constexpr GLsizei WINDOW_WIDTH = 45 * tileSize, WINDOW_HEIGHT = 45 * tileSize;
+constexpr GLsizei WINDOW_WIDTH = 40 * tileSize, WINDOW_HEIGHT = 40 * tileSize;
 
 struct InputState
 {
@@ -148,7 +148,7 @@ int main(int argc, char **argv)
 
     std::vector<std::string> tiles(NUM_OF_TILES);
     tiles[Tile::WALL] = std::string("../resources/tile001.png");
-    tiles[Tile::FLOOR] = std::string("../resources/tile002.png");
+    tiles[Tile::FLOOR] = std::string("../resources/tile024.png");
     tiles[Tile::TRAP] = std::string("../resources/tile000.png");
     Level level("../resources/level1.txt", tiles);
 
@@ -157,13 +157,13 @@ int main(int argc, char **argv)
 
     Image screenBuffer(WINDOW_WIDTH, WINDOW_HEIGHT, 4);
     Image background(WINDOW_WIDTH, WINDOW_HEIGHT, 4);
-    Image img("../resources/tex.png");
 
 
     glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT); GL_CHECK_ERRORS;
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f); GL_CHECK_ERRORS;
 
     level.Draw(background);
+    level.Draw(screenBuffer);
 
     //game loop
     while (!glfwWindowShouldClose(window))
@@ -176,11 +176,8 @@ int main(int argc, char **argv)
         processPlayerMovement(player);
         player.Draw(screenBuffer);
 
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //GL_CHECK_ERRORS;
-        //glDrawPixels(WINDOW_WIDTH, WINDOW_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, background.Data());
-        glDrawPixels(WINDOW_WIDTH, WINDOW_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, screenBuffer.Data());
-        //glDrawPixels(img.Width(), img.Height(), GL_RGBA, GL_UNSIGNED_BYTE, img.Data());
-        //GL_CHECK_ERRORS;
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); GL_CHECK_ERRORS;
+        glDrawPixels(WINDOW_WIDTH, WINDOW_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, screenBuffer.Data()); GL_CHECK_ERRORS;
 
         glfwSwapBuffers(window);
     }
