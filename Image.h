@@ -3,7 +3,7 @@
 
 #include <string>
 
-constexpr int tileSize = 32;
+constexpr int tileSize = 16;
 
 struct Pixel
 {

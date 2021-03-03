@@ -12,6 +12,7 @@ Image::Image(const std::string &a_path)
 {
   if((data = (Pixel*)stbi_load(a_path.c_str(), &width, &height, &channels, 0)) != nullptr)
   {
+    //channels = 4;
     size = width * height * channels;
   }
 }
