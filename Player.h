@@ -2,6 +2,9 @@
 #define MAIN_PLAYER_H
 
 #include "Image.h"
+#include <vector>
+
+constexpr int spriteSize = 20;
 
 struct Point
 {
@@ -9,7 +12,7 @@ struct Point
   int y;
 };
 
-enum class MovementDir
+enum MovementDir
 {
   UP,
   DOWN,
@@ -19,18 +22,23 @@ enum class MovementDir
 
 struct Player
 {
-  explicit Player(Point pos = {.x = 10, .y = 10}) :
-                 coords(pos), old_coords(coords) {};
+  explicit Player(Point pos = {.x = 10, .y = 10});
 
-  bool Moved() const;
-  void ProcessInput(MovementDir dir);
-  void Draw(Image &screen);
+  bool Moved();
+  void ProcessInput(int dir);
+  void Draw(Image &screen, Image &background);
 
 private:
   Point coords {.x = 10, .y = 10};
   Point old_coords {.x = 10, .y = 10};
   Pixel color {.r = 255, .g = 255, .b = 0, .a = 255};
   int move_speed = 4;
+
+  bool direction[4];
+
+  Image patient;
+  std::vector<Image*> running;
+  //std::vector<Image*> attack;
 
 };
 
