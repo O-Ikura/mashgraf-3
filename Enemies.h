@@ -2,23 +2,32 @@
 
 class Enemy {
 public:
-    Enemy(Point pos);
+    Enemy(): sprites() {}
 
-    void Logic();
-    void Draw();
+    virtual bool Moved() = 0;
+    virtual void Update(Player &player) = 0;
+    virtual void Draw(Image &screen) = 0;
 
-    ~Enemy();
+    Image* PushSprite(const std::string &a_path);
+
+    ~Enemy() {}
 
 private:
-    Point coords{.x = 10, .y = 10};
-    Point old_coords{.x = 10, .y = 10};
-    Pixel color{.r = 255, .g = 255, .b = 0, .a = 255};
-    int hit_points = 100;
-    int move_speed = 4;
+    std::vector<Image*> sprites;
+};
 
-    bool direction[4];
+class Trap : virtual public Enemy {
+public:
+    Trap(Point pos);
 
-    Image patient;
-    Animation run_right;
-    Animation run_left;
+    bool Moved() { return false; }
+    void Update(Player &player);
+    void Draw(Image &screen);
+
+private:
+    bool is_active = false;
+    Point coords;
+    Image *inactive;
+    Image *active;
+
 };

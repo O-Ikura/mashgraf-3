@@ -1,6 +1,6 @@
 #include "common.h"
-#include "Player.h"
-//#include "Enemies.h"
+//#include "Player.h"
+#include "Enemies.h"
 #include <string>
 #include <vector>
 
@@ -147,11 +147,34 @@ int main(int argc, char **argv)
     std::vector<std::string> tiles(NUM_OF_TILES);
     tiles[Tile::WALL] = std::string("../resources/tile001.png");
     tiles[Tile::FLOOR] = std::string("../resources/tile024.png");
-    tiles[Tile::TRAP] = std::string("../resources/tile000.png");
+    tiles[Tile::TRAP] = std::string("../resources/tile034.png");
     Level level("../resources/level1.txt", tiles);
 
     Point starting_pos{.x = WINDOW_WIDTH / 2, .y = WINDOW_HEIGHT / 2};
-    Player player{starting_pos};
+
+    std::vector<Enemy*> enemies;
+    
+
+    auto &tmp = level.GetInfo();
+    for (int y = 0; y < MAP_SIZE; ++y) {
+        for (int x = 0; x < MAP_SIZE; ++x) {
+            switch (tmp[x][y])
+            {
+            case '@':
+                starting_pos.x = x * tileSize;
+                starting_pos.y = y * tileSize;
+                break;
+            
+            case 'T':
+                enemies.push_back(new Trap({.x = x * tileSize, .y = y * tileSize}));
+            
+            default:
+                break;
+            }
+        }
+    }
+
+    Player player(starting_pos);
 
     Image screenBuffer(WINDOW_WIDTH, WINDOW_HEIGHT, 4);
     //Image background(WINDOW_WIDTH, WINDOW_HEIGHT, 4);
@@ -172,6 +195,12 @@ int main(int argc, char **argv)
         lastFrame = currentFrame;
         glfwPollEvents();
         processPlayerMovement(player, level.GetMap());
+
+        for (auto i: enemies) {
+            i->Update(player);
+            i->Draw(screenBuffer);
+        }
+
         player.Draw(screenBuffer);
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); GL_CHECK_ERRORS;

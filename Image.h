@@ -29,7 +29,7 @@ class Image {
 public:
     explicit Image(const Image &orig);
     explicit Image(const std::string &a_path);
-    Image(int a_width, int a_height, int a_channels);
+    Image(int a_width = 16, int a_height = 16, int a_channels = 4);
 
     int Save(const std::string &a_path);
     void Draw(int coord_x, int coord_y, Image &screen);

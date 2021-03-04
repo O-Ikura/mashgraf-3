@@ -32,6 +32,7 @@ CMakeFiles/main.dir/Player.cpp.o: Player.cpp
 CMakeFiles/main.dir/Player.cpp.o: Player.h
 
 CMakeFiles/main.dir/main.cpp.o: Animation.h
+CMakeFiles/main.dir/main.cpp.o: Enemies.h
 CMakeFiles/main.dir/main.cpp.o: Image.h
 CMakeFiles/main.dir/main.cpp.o: Level.h
 CMakeFiles/main.dir/main.cpp.o: Player.h

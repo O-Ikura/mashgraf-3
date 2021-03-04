@@ -6,6 +6,7 @@ Level::Level(
         const std::string &level_name,
         const std::vector<std::string> &sprite_paths)
     : path(level_name)
+    , info(MAP_SIZE, std::vector<char>(MAP_SIZE))
     , lvl(MAP_SIZE, std::vector<char>(MAP_SIZE))
     , background(MAP_SIZE * tileSize, MAP_SIZE * tileSize, 4)
     , tile_sprites(NUM_OF_TILES)
@@ -16,6 +17,7 @@ Level::Level(
         for (int j = 0; j < MAP_SIZE; ++j) {
             char tmp;
             file >> tmp;
+            info[i][j] = tmp;
             switch (tmp)
             {
             case '@':

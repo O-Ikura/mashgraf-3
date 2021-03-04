@@ -18,13 +18,14 @@ public:
 
     //void ReadFromFile();
     void Draw();
-    Image& GetImage() { return background; }
-    //void DrawTile(int x, int y, Image &tile, Image &background);
 
+    Image& GetImage() { return background; }
+    std::vector<std::vector<char>>& GetInfo() { return info; }
     std::vector<std::vector<char>>& GetMap() { return lvl; }
 
 private:
     std::string path;
+    std::vector<std::vector<char>> info;
     std::vector<std::vector<char>> lvl;
 
     Image background;
