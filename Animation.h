@@ -1,7 +1,8 @@
 #include "Image.h"
 #include <vector>
 
-struct Animation {
+class Animation {
+public:
     Animation(
             bool inf,
             int timer,

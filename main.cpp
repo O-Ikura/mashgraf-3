@@ -154,27 +154,28 @@ int main(int argc, char **argv)
     Player player{starting_pos};
 
     Image screenBuffer(WINDOW_WIDTH, WINDOW_HEIGHT, 4);
-    Image background(WINDOW_WIDTH, WINDOW_HEIGHT, 4);
+    //Image background(WINDOW_WIDTH, WINDOW_HEIGHT, 4);
 
 
     glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT); GL_CHECK_ERRORS;
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); GL_CHECK_ERRORS;
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f); GL_CHECK_ERRORS;
 
-    level.Draw(background);
-    level.Draw(screenBuffer);
+    //level.Draw(background);
+    //level.Draw(screenBuffer);
 
     //game loop
     while (!glfwWindowShouldClose(window))
     {
-
+        level.GetImage().Draw(0, 0, screenBuffer);
         GLfloat currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
         glfwPollEvents();
         processPlayerMovement(player, level.GetMap());
-        player.Draw(screenBuffer, background);
+        player.Draw(screenBuffer);
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); GL_CHECK_ERRORS;
+        //glDrawPixels(WINDOW_WIDTH, WINDOW_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, level.GetImage().Data()); GL_CHECK_ERRORS;
         glDrawPixels(WINDOW_WIDTH, WINDOW_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, screenBuffer.Data()); GL_CHECK_ERRORS;
 
         glfwSwapBuffers(window);

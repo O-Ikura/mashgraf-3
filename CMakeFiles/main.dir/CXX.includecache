@@ -16,6 +16,14 @@ Image.h
 vector
 -
 
+/home/oikura/Documents/programs/msu_cmc_cg_2021/template1_cpp/Enemies.cpp
+Enemies.h
+/home/oikura/Documents/programs/msu_cmc_cg_2021/template1_cpp/Enemies.h
+
+/home/oikura/Documents/programs/msu_cmc_cg_2021/template1_cpp/Enemies.h
+Player.h
+/home/oikura/Documents/programs/msu_cmc_cg_2021/template1_cpp/Player.h
+
 /home/oikura/Documents/programs/msu_cmc_cg_2021/template1_cpp/Image.cpp
 Image.h
 /home/oikura/Documents/programs/msu_cmc_cg_2021/template1_cpp/Image.h
@@ -41,8 +49,8 @@ fstream
 /home/oikura/Documents/programs/msu_cmc_cg_2021/template1_cpp/Level.h
 vector
 -
-Player.h
-/home/oikura/Documents/programs/msu_cmc_cg_2021/template1_cpp/Player.h
+Image.h
+/home/oikura/Documents/programs/msu_cmc_cg_2021/template1_cpp/Image.h
 
 /home/oikura/Documents/programs/msu_cmc_cg_2021/template1_cpp/Player.cpp
 Player.h
@@ -51,6 +59,8 @@ Player.h
 /home/oikura/Documents/programs/msu_cmc_cg_2021/template1_cpp/Player.h
 Animation.h
 /home/oikura/Documents/programs/msu_cmc_cg_2021/template1_cpp/Animation.h
+Level.h
+/home/oikura/Documents/programs/msu_cmc_cg_2021/template1_cpp/Level.h
 
 /home/oikura/Documents/programs/msu_cmc_cg_2021/template1_cpp/common.h
 iostream
@@ -65,12 +75,8 @@ glad/glad.h
 /home/oikura/Documents/programs/msu_cmc_cg_2021/template1_cpp/main.cpp
 common.h
 /home/oikura/Documents/programs/msu_cmc_cg_2021/template1_cpp/common.h
-Image.h
-/home/oikura/Documents/programs/msu_cmc_cg_2021/template1_cpp/Image.h
 Player.h
 /home/oikura/Documents/programs/msu_cmc_cg_2021/template1_cpp/Player.h
-Level.h
-/home/oikura/Documents/programs/msu_cmc_cg_2021/template1_cpp/Level.h
 string
 -
 vector

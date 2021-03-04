@@ -9,19 +9,25 @@ CMakeFiles/main.dir/Animation.cpp.o: Animation.cpp
 CMakeFiles/main.dir/Animation.cpp.o: Animation.h
 CMakeFiles/main.dir/Animation.cpp.o: Image.h
 
+CMakeFiles/main.dir/Enemies.cpp.o: Animation.h
+CMakeFiles/main.dir/Enemies.cpp.o: Enemies.cpp
+CMakeFiles/main.dir/Enemies.cpp.o: Enemies.h
+CMakeFiles/main.dir/Enemies.cpp.o: Image.h
+CMakeFiles/main.dir/Enemies.cpp.o: Level.h
+CMakeFiles/main.dir/Enemies.cpp.o: Player.h
+
 CMakeFiles/main.dir/Image.cpp.o: Image.cpp
 CMakeFiles/main.dir/Image.cpp.o: Image.h
 CMakeFiles/main.dir/Image.cpp.o: stb_image.h
 CMakeFiles/main.dir/Image.cpp.o: stb_image_write.h
 
-CMakeFiles/main.dir/Level.cpp.o: Animation.h
 CMakeFiles/main.dir/Level.cpp.o: Image.h
 CMakeFiles/main.dir/Level.cpp.o: Level.cpp
 CMakeFiles/main.dir/Level.cpp.o: Level.h
-CMakeFiles/main.dir/Level.cpp.o: Player.h
 
 CMakeFiles/main.dir/Player.cpp.o: Animation.h
 CMakeFiles/main.dir/Player.cpp.o: Image.h
+CMakeFiles/main.dir/Player.cpp.o: Level.h
 CMakeFiles/main.dir/Player.cpp.o: Player.cpp
 CMakeFiles/main.dir/Player.cpp.o: Player.h
 

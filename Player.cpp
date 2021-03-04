@@ -80,17 +80,11 @@ void Player::ProcessInput(int dir, std::vector<std::vector<char>> &lvl)
     }
 }
 
-void Player::Draw(Image &screen, Image &background)
+void Player::Draw(Image &screen)
 {
     if (Moved())
     {
-        for (int y = old_coords.y; y <= old_coords.y + spriteSize; ++y)
-        {
-            for (int x = old_coords.x; x <= old_coords.x + spriteSize; ++x)
-            {
-                screen.PutPixel(x, y, background.GetPixel(x, y));
-            }
-        }
+        patient.Draw(coords.x, coords.y, screen);
         old_coords = coords;
     }
 
@@ -112,15 +106,7 @@ void Player::Draw(Image &screen, Image &background)
         direction[MovementDir::LEFT] = false;
     }
 
-    for (int y = 0; y < spriteSize; ++y) {
-        for (int x = 0; x < spriteSize; ++x) {
-            screen.PutPixel(
-                    x + coords.x,
-                    y + coords.y,
-                    blend(background.GetPixel(x + coords.x, y + coords.y), tmp->GetPixel(x, spriteSize - y - 1))
-            );
-        }
-    }
+    tmp->Draw(coords.x, coords.y, screen);
 }
 
 Player::~Player() {}

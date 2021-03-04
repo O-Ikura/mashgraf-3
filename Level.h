@@ -9,21 +9,25 @@ enum Tile {
     PLAYER,
 };
 
-struct Level {
+class Level {
+public:
 
     explicit Level(
             const std::string &level_name,
             const std::vector<std::string> &sprite_paths);
 
     //void ReadFromFile();
-    void Draw(Image &screen);
-    void DrawTile(int x, int y, Image &tile, Image &background);
+    void Draw();
+    Image& GetImage() { return background; }
+    //void DrawTile(int x, int y, Image &tile, Image &background);
 
     std::vector<std::vector<char>>& GetMap() { return lvl; }
 
 private:
     std::string path;
     std::vector<std::vector<char>> lvl;
+
+    Image background;
     std::vector<Image*> tile_sprites;
     Point start_pos;
 

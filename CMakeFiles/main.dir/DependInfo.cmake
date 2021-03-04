@@ -16,6 +16,7 @@ set(CMAKE_C_TARGET_INCLUDE_PATH
   )
 set(CMAKE_DEPENDS_CHECK_CXX
   "/home/oikura/Documents/programs/msu_cmc_cg_2021/template1_cpp/Animation.cpp" "/home/oikura/Documents/programs/msu_cmc_cg_2021/template1_cpp/CMakeFiles/main.dir/Animation.cpp.o"
+  "/home/oikura/Documents/programs/msu_cmc_cg_2021/template1_cpp/Enemies.cpp" "/home/oikura/Documents/programs/msu_cmc_cg_2021/template1_cpp/CMakeFiles/main.dir/Enemies.cpp.o"
   "/home/oikura/Documents/programs/msu_cmc_cg_2021/template1_cpp/Image.cpp" "/home/oikura/Documents/programs/msu_cmc_cg_2021/template1_cpp/CMakeFiles/main.dir/Image.cpp.o"
   "/home/oikura/Documents/programs/msu_cmc_cg_2021/template1_cpp/Level.cpp" "/home/oikura/Documents/programs/msu_cmc_cg_2021/template1_cpp/CMakeFiles/main.dir/Level.cpp.o"
   "/home/oikura/Documents/programs/msu_cmc_cg_2021/template1_cpp/Player.cpp" "/home/oikura/Documents/programs/msu_cmc_cg_2021/template1_cpp/CMakeFiles/main.dir/Player.cpp.o"

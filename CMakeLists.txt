@@ -13,6 +13,7 @@ set(SOURCE_FILES
         Player.cpp
         Level.cpp
         Animation.cpp
+        Enemies.cpp
         main.cpp)
 
 set(ADDITIONAL_INCLUDE_DIRS

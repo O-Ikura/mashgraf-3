@@ -150,6 +150,33 @@ Animation.cpp.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Animation.cpp.s
 .PHONY : Animation.cpp.s
 
+Enemies.o: Enemies.cpp.o
+
+.PHONY : Enemies.o
+
+# target to build an object file
+Enemies.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Enemies.cpp.o
+.PHONY : Enemies.cpp.o
+
+Enemies.i: Enemies.cpp.i
+
+.PHONY : Enemies.i
+
+# target to preprocess a source file
+Enemies.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Enemies.cpp.i
+.PHONY : Enemies.cpp.i
+
+Enemies.s: Enemies.cpp.s
+
+.PHONY : Enemies.s
+
+# target to generate assembly for a file
+Enemies.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Enemies.cpp.s
+.PHONY : Enemies.cpp.s
+
 Image.o: Image.cpp.o
 
 .PHONY : Image.o
@@ -297,6 +324,9 @@ help:
 	@echo "... Animation.o"
 	@echo "... Animation.i"
 	@echo "... Animation.s"
+	@echo "... Enemies.o"
+	@echo "... Enemies.i"
+	@echo "... Enemies.s"
 	@echo "... Image.o"
 	@echo "... Image.i"
 	@echo "... Image.s"

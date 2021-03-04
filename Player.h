@@ -14,13 +14,14 @@ enum MovementDir
     RIGHT
 };
 
-struct Player
+class Player
 {
+public:
     Player(Point pos);
 
     bool Moved();
     void ProcessInput(int dir, std::vector<std::vector<char>> &lvl);
-    void Draw(Image &screen, Image &background);
+    void Draw(Image &screen);
 
     ~Player();
 
