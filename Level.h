@@ -1,10 +1,6 @@
 #include <vector>
-#include "Player.h"
-
-enum {
-    MAP_SIZE = 40,
-    NUM_OF_TILES = 3,
-};
+//#include "Player.h"
+#include "Image.h"
 
 enum Tile {
     WALL,
@@ -22,7 +18,8 @@ struct Level {
     //void ReadFromFile();
     void Draw(Image &screen);
     void DrawTile(int x, int y, Image &tile, Image &background);
-    //void DrawTile(const Image &tile) const;
+
+    std::vector<std::vector<char>>& GetMap() { return lvl; }
 
 private:
     std::string path;

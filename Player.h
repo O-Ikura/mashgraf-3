@@ -2,6 +2,7 @@
 #define MAIN_PLAYER_H
 
 #include "Animation.h"
+#include "Level.h"
 
 constexpr int spriteSize = 20;
 
@@ -18,7 +19,7 @@ struct Player
     Player(Point pos);
 
     bool Moved();
-    void ProcessInput(int dir);
+    void ProcessInput(int dir, std::vector<std::vector<char>> &lvl);
     void Draw(Image &screen, Image &background);
 
     ~Player();

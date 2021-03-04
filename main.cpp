@@ -1,8 +1,6 @@
 #include "common.h"
-#include "Image.h"
 #include "Player.h"
 //#include "Enemies.h"
-#include "Level.h"
 #include <string>
 #include <vector>
 
@@ -45,16 +43,16 @@ void OnKeyboardPressed(GLFWwindow *window, int key, int scancode, int action, in
     }
 }
 
-void processPlayerMovement(Player &player)
+void processPlayerMovement(Player &player, std::vector<std::vector<char>> &lvl)
 {
     if (Input.keys[GLFW_KEY_W])
-        player.ProcessInput(MovementDir::UP);
+        player.ProcessInput(MovementDir::UP, lvl);
     else if (Input.keys[GLFW_KEY_S])
-        player.ProcessInput(MovementDir::DOWN);
+        player.ProcessInput(MovementDir::DOWN, lvl);
     if (Input.keys[GLFW_KEY_A])
-        player.ProcessInput(MovementDir::LEFT);
+        player.ProcessInput(MovementDir::LEFT, lvl);
     else if (Input.keys[GLFW_KEY_D])
-        player.ProcessInput(MovementDir::RIGHT);
+        player.ProcessInput(MovementDir::RIGHT, lvl);
 }
 
 void OnMouseButtonClicked(GLFWwindow *window, int button, int action, int mods)
@@ -173,7 +171,7 @@ int main(int argc, char **argv)
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
         glfwPollEvents();
-        processPlayerMovement(player);
+        processPlayerMovement(player, level.GetMap());
         player.Draw(screenBuffer, background);
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); GL_CHECK_ERRORS;

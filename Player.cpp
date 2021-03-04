@@ -38,24 +38,40 @@ bool Player::Moved()
     return true;
 }
 
-void Player::ProcessInput(int dir)
+void Player::ProcessInput(int dir, std::vector<std::vector<char>> &lvl)
 {
     int move_dist = move_speed * 1;
+    
+    int x = (coords.x + spriteSize / 2) / tileSize ;
+    int y = (coords.y + spriteSize / 2) / tileSize ;
+
     switch (dir)
     {
     case MovementDir::UP:
+        if (lvl[x][y + 1] == Tile::WALL) {
+            break;
+        }
         old_coords.y = coords.y;
         coords.y += move_dist;
         break;
     case MovementDir::DOWN:
+        if (lvl[x][y - 1] == Tile::WALL) {
+            break;
+        }
         old_coords.y = coords.y;
         coords.y -= move_dist;
         break;
     case MovementDir::LEFT:
+        if (lvl[x - 1][y] == Tile::WALL) {
+            break;
+        }
         old_coords.x = coords.x;
         coords.x -= move_dist;
         break;
     case MovementDir::RIGHT:
+        if (lvl[x + 1][y] == Tile::WALL) {
+            break;
+        }
         old_coords.x = coords.x;
         coords.x += move_dist;
         break;

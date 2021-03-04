@@ -4,6 +4,9 @@
 #include <string>
 #include <iostream>
 
+constexpr int MAP_SIZE = 40;
+constexpr int NUM_OF_TILES = 3;
+
 struct Point
 {
     int x;
