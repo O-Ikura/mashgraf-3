@@ -4,6 +4,7 @@ Player::Player(Point pos)
     : coords(pos)
     , old_coords(coords)
     , hit_points(100)
+    , is_dead(false)
     , direction({false})
     , patient("../resources/player_patient.png")
     , run_right(true, 0, std::vector<Image*>(
@@ -18,6 +19,15 @@ Player::Player(Point pos)
             new Image("../resources/player_run_left_1.png"),
             new Image("../resources/player_run_left_2.png"),
             new Image("../resources/player_run_left_3.png"),
+        }
+    ))
+    , deth_animation(false, 5, std::vector<Image*>(
+        {
+            new Image("../resources/death_1.png"),
+            new Image("../resources/death_2.png"),
+            new Image("../resources/death_3.png"),
+            new Image("../resources/death_4.png"),
+            new Image("../resources/death_5.png")
         }
     ))
 {}
@@ -82,31 +92,40 @@ void Player::ProcessInput(int dir, std::vector<std::vector<char>> &lvl)
 
 void Player::Draw(Image &screen)
 {
-    if (Moved())
+    if (IsDead()) {
+        deth_animation.Draw(coords.x, coords.y, screen);
+    }
+
+    
+    if (!Moved())
     {
+
         patient.Draw(coords.x, coords.y, screen);
         old_coords = coords;
+
+    } 
+    else {
+
+        if (direction[MovementDir::RIGHT]) {
+            run_right.Draw(coords.x, coords.y, screen);
+            direction[MovementDir::RIGHT] = false;
+        }
+        else if (direction[MovementDir::LEFT]) {
+            run_left.Draw(coords.x, coords.y, screen);
+            direction[MovementDir::LEFT] = false;
+        }
+        else if (direction[MovementDir::UP]) {
+            run_left.Draw(coords.x, coords.y, screen);
+            direction[MovementDir::UP] = false;
+        }
+        else if (direction[MovementDir::DOWN]) {
+            run_right.Draw(coords.x, coords.y, screen);
+            direction[MovementDir::DOWN] = false;
+        }
+
     }
 
-    Image *tmp = &patient;
-    if (direction[MovementDir::UP]) {
-        tmp = run_left.GetImage();
-        direction[MovementDir::UP] = false;
-    }
-    if (direction[MovementDir::DOWN]) {
-        tmp = run_right.GetImage();
-        direction[MovementDir::DOWN] = false;
-    }
-    if (direction[MovementDir::RIGHT]) {
-        tmp = run_right.GetImage();
-        direction[MovementDir::RIGHT] = false;
-    }
-    if (direction[MovementDir::LEFT]) {
-        tmp = run_left.GetImage();
-        direction[MovementDir::LEFT] = false;
-    }
-
-    tmp->Draw(coords.x, coords.y, screen);
+    //tmp->Draw(coords.x, coords.y, screen);
 }
 
 Player::~Player() {}

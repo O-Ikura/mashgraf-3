@@ -53,6 +53,9 @@ void processPlayerMovement(Player &player, std::vector<std::vector<char>> &lvl)
         player.ProcessInput(MovementDir::LEFT, lvl);
     else if (Input.keys[GLFW_KEY_D])
         player.ProcessInput(MovementDir::RIGHT, lvl);
+    if (!Input.keys[GLFW_KEY_W] && !Input.keys[GLFW_KEY_S] && !Input.keys[GLFW_KEY_A] && !Input.keys[GLFW_KEY_D]) {
+        player.Patient();
+    }
 }
 
 void OnMouseButtonClicked(GLFWwindow *window, int button, int action, int mods)

@@ -20,7 +20,9 @@ public:
     Player(Point pos);
 
     bool Moved();
+    bool IsDead() { return is_dead; }
     void ProcessInput(int dir, std::vector<std::vector<char>> &lvl);
+    void Patient() { old_coords = coords; }
     void Draw(Image &screen);
 
     Point GetCoords() {
@@ -31,9 +33,11 @@ public:
 
     void Hit(int x) {
         hit_points -= x;
-        std::cout << hit_points << std::endl;
+        //::cout << hit_points << std::endl;
         if (hit_points <= 0) {
-            std::cout << "ya ded" << std::endl;
+            is_dead = true;
+            hit_points = 0;
+            //std::cout << "ya ded" << std::endl;
             //do something
         }
     }
@@ -46,11 +50,13 @@ private:
     int hit_points = 100;
     int move_speed = 4;
 
+    bool is_dead = false;
     bool direction[4];
 
     Image patient;
     Animation run_right;
     Animation run_left;
+    Animation deth_animation;
     //std::vector<Animation*> running;
     //std::vector<Image*> attack;
 };
