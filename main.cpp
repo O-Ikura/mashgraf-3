@@ -115,6 +115,37 @@ int initGL()
     return 0;
 }
 
+void initLevel(
+        int cur_level,
+        Level &level,
+        std::vector<std::string> &levels, 
+        Point &finish_pos,
+        Player &player,
+        std::vector<Enemy*> &enemies)
+{
+    level.ReadFromFile(levels[cur_level]);
+    level.Draw();
+
+    player.SetCoords(level.GetStartPos());
+    finish_pos = {level.GetFinishPos()};
+    
+    //Инициализация врагов
+    auto &tmp = level.GetInfo();
+    for (int y = 0; y < MAP_SIZE; ++y) {
+        for (int x = 0; x < MAP_SIZE; ++x) {
+            switch (tmp[x][y])
+            {
+            case 'T':
+                enemies.push_back(new Trap({.x = x * tileSize, .y = y * tileSize}));
+            
+            default:
+                break;
+            }
+        }
+    }
+
+}
+
 int main(int argc, char **argv)
 {
     if (!glfwInit())
@@ -160,30 +191,13 @@ int main(int argc, char **argv)
             "../resources/level3.txt",
             } );
     int cur_level = 0;
-    level.ReadFromFile(levels[cur_level]);
-    level.Draw();
 
-    Point starting_pos{level.GetStartPos()};
-    Point finish_pos{level.GetFinishPos()};
-
+    Point starting_pos;
+    Point finish_pos;
     std::vector<Enemy*> enemies;
-    
-    //Инициализация врагов
-    auto &tmp = level.GetInfo();
-    for (int y = 0; y < MAP_SIZE; ++y) {
-        for (int x = 0; x < MAP_SIZE; ++x) {
-            switch (tmp[x][y])
-            {
-            case 'T':
-                enemies.push_back(new Trap({.x = x * tileSize, .y = y * tileSize}));
-            
-            default:
-                break;
-            }
-        }
-    }
+    Player player;
 
-    Player player(starting_pos);
+    initLevel(cur_level, level, levels, finish_pos, player, enemies);
 
     Image screenBuffer(WINDOW_WIDTH, WINDOW_HEIGHT, 4);
     //Image background(WINDOW_WIDTH, WINDOW_HEIGHT, 4);
@@ -219,9 +233,7 @@ int main(int argc, char **argv)
             //std::cout << "i came\n";
             cur_level++;
             if (cur_level < NUM_OF_LEVELS) {
-                level.ReadFromFile(levels[cur_level]);
-                level.Draw();
-                player.SetCoords(level.GetStartPos());
+                initLevel(cur_level, level, levels, finish_pos, player, enemies);
             }
             else {
                 Image win_msg("../resources/win_msg.png");

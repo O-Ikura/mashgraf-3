@@ -17,7 +17,7 @@ enum MovementDir
 class Player
 {
 public:
-    Player(Point pos);
+    Player(Point pos = {.x = 10, .y = 10});
 
     bool Moved();
     bool IsDead() const { return is_dead; }
