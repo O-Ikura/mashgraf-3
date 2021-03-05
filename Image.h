@@ -5,7 +5,7 @@
 #include <iostream>
 
 constexpr int MAP_SIZE = 40;
-constexpr int NUM_OF_TILES = 3;
+constexpr int NUM_OF_TILES = 4;
 
 struct Point
 {

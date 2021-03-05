@@ -6,30 +6,32 @@ enum Tile {
     WALL,
     FLOOR,
     TRAP,
+    FINISH,
     PLAYER,
 };
 
 class Level {
 public:
 
-    explicit Level(
-            const std::string &level_name,
-            const std::vector<std::string> &sprite_paths);
+    explicit Level(const std::vector<std::string> &sprite_paths);
 
-    //void ReadFromFile();
+    void ReadFromFile(const std::string &a_path);
     void Draw();
+
+    Point GetStartPos() { return start_pos; }
+    Point GetFinishPos() { return finish_pos; }
 
     Image& GetImage() { return background; }
     std::vector<std::vector<char>>& GetInfo() { return info; }
     std::vector<std::vector<char>>& GetMap() { return lvl; }
 
 private:
-    std::string path;
     std::vector<std::vector<char>> info;
     std::vector<std::vector<char>> lvl;
 
     Image background;
     std::vector<Image*> tile_sprites;
     Point start_pos;
+    Point finish_pos;
 
 };

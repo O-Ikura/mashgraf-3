@@ -8,6 +8,7 @@
 #include <GLFW/glfw3.h>
 
 constexpr GLsizei WINDOW_WIDTH = 40 * tileSize, WINDOW_HEIGHT = 40 * tileSize;
+constexpr int NUM_OF_LEVELS = 3;
 
 struct InputState
 {
@@ -151,23 +152,28 @@ int main(int argc, char **argv)
     tiles[Tile::WALL] = std::string("../resources/tile001.png");
     tiles[Tile::FLOOR] = std::string("../resources/tile024.png");
     tiles[Tile::TRAP] = std::string("../resources/tile034.png");
-    Level level("../resources/level1.txt", tiles);
+    tiles[Tile::FINISH] = std::string("../resources/finish.png");
+    Level level(tiles);
+    std::vector<std::string> levels( {
+            "../resources/level1.txt",
+            "../resources/level2.txt",
+            "../resources/level3.txt",
+            } );
+    int cur_level = 0;
+    level.ReadFromFile(levels[cur_level]);
+    level.Draw();
 
-    Point starting_pos{.x = WINDOW_WIDTH / 2, .y = WINDOW_HEIGHT / 2};
+    Point starting_pos{level.GetStartPos()};
+    Point finish_pos{level.GetFinishPos()};
 
     std::vector<Enemy*> enemies;
     
-
+    //Инициализация врагов
     auto &tmp = level.GetInfo();
     for (int y = 0; y < MAP_SIZE; ++y) {
         for (int x = 0; x < MAP_SIZE; ++x) {
             switch (tmp[x][y])
             {
-            case '@':
-                starting_pos.x = x * tileSize;
-                starting_pos.y = y * tileSize;
-                break;
-            
             case 'T':
                 enemies.push_back(new Trap({.x = x * tileSize, .y = y * tileSize}));
             
@@ -186,9 +192,6 @@ int main(int argc, char **argv)
     glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT); GL_CHECK_ERRORS;
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f); GL_CHECK_ERRORS;
 
-    //level.Draw(background);
-    //level.Draw(screenBuffer);
-
     //game loop
     while (!glfwWindowShouldClose(window))
     {
@@ -196,18 +199,48 @@ int main(int argc, char **argv)
         GLfloat currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
-        glfwPollEvents();
-        processPlayerMovement(player, level.GetMap());
 
-        for (auto i: enemies) {
-            i->Update(player);
-            i->Draw(screenBuffer);
+        glfwPollEvents();
+        if (!player.IsDead()) {
+            processPlayerMovement(player, level.GetMap());
+
+            for (auto i: enemies) {
+                i->Update(player);
+            }
         }
 
+        Point tmp = player.GetCoords();
+        //std::cout << tmp.x << ' ' << tmp.y << ' ' << finish_pos.x << ' ' << finish_pos.y << '\n';
+        if ((finish_pos.x <= tmp.x) &&
+            (tmp.x <= finish_pos.x + tileSize) &&
+            (finish_pos.y <= tmp.y) &&
+            (tmp.y <= finish_pos.y + tileSize)) 
+        {
+            //std::cout << "i came\n";
+            cur_level++;
+            if (cur_level < NUM_OF_LEVELS) {
+                level.ReadFromFile(levels[cur_level]);
+                level.Draw();
+                player.SetCoords(level.GetStartPos());
+            }
+            else {
+                Image win_msg("../resources/win_msg.png");
+                win_msg.Draw( (WINDOW_WIDTH - win_msg.Width())/2, (WINDOW_HEIGHT - win_msg.Height())/2, screenBuffer);
+            }
+            
+        }
+
+        for (auto i: enemies) {
+            i->Draw(screenBuffer);
+        }
         player.Draw(screenBuffer);
 
+        if (player.IsDead()) {
+            Image death_msg("../resources/death_msg.png");
+            death_msg.Draw( (WINDOW_WIDTH - death_msg.Width())/2, (WINDOW_HEIGHT - death_msg.Height())/2, screenBuffer);
+        }
+
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); GL_CHECK_ERRORS;
-        //glDrawPixels(WINDOW_WIDTH, WINDOW_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, level.GetImage().Data()); GL_CHECK_ERRORS;
         glDrawPixels(WINDOW_WIDTH, WINDOW_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, screenBuffer.Data()); GL_CHECK_ERRORS;
 
         glfwSwapBuffers(window);

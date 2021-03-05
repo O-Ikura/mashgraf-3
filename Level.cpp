@@ -2,37 +2,53 @@
 #include <iostream>
 #include <fstream>
 
-Level::Level(
-        const std::string &level_name,
-        const std::vector<std::string> &sprite_paths)
-    : path(level_name)
-    , info(MAP_SIZE, std::vector<char>(MAP_SIZE))
+Level::Level(const std::vector<std::string> &sprite_paths)
+    : info(MAP_SIZE, std::vector<char>(MAP_SIZE))
     , lvl(MAP_SIZE, std::vector<char>(MAP_SIZE))
     , background(MAP_SIZE * tileSize, MAP_SIZE * tileSize, 4)
     , tile_sprites(NUM_OF_TILES)
 {
-    std::ifstream file(level_name);
+    for (int i = 0; i < NUM_OF_TILES; ++i) {
+        //std::string tmp(sprite_paths[i]);
+        std::cout << sprite_paths[i] << std::endl;
+        Image *tmp = new Image(sprite_paths[i]);
+        tile_sprites[i] = tmp;
+    }
+    //std::cout << tile_sprites[0]->Width() << " " << tile_sprites[0]->Height() << std::endl;
+    //std::cout << tile_sprites[0]->Channels() << " " << tile_sprites[0]->Size() << std::endl;
+    //Draw();
 
-    for (int i = 0; i < MAP_SIZE; ++i) {
-        for (int j = 0; j < MAP_SIZE; ++j) {
+};
+
+void Level::ReadFromFile(const std::string &a_path) {
+
+    std::ifstream file(a_path);
+    for (int x = 0; x < MAP_SIZE; ++x) {
+        for (int y = 0; y < MAP_SIZE; ++y) {
             char tmp;
             file >> tmp;
-            info[i][j] = tmp;
+            info[x][y] = tmp;
             switch (tmp)
             {
             case '@':
-                start_pos.x = i;
-                start_pos.y = j;
+                start_pos.x = x * tileSize;
+                start_pos.y = y * tileSize;
             case '.':
-                lvl[i][j] = Tile::FLOOR;
+                lvl[x][y] = Tile::FLOOR;
                 break;
             
             case '#':
-                lvl[i][j] = Tile::WALL;
+                lvl[x][y] = Tile::WALL;
                 break;
             
             case 'T':
-                lvl[i][j] = Tile::TRAP;
+                lvl[x][y] = Tile::TRAP;
+                break;
+            
+            case 'X':
+                lvl[x][y] = Tile::FINISH;
+                finish_pos.x = x * tileSize;
+                finish_pos.y = y * tileSize;
                 break;
             
             default:
@@ -41,21 +57,7 @@ Level::Level(
         }
     }
     file.close();
-
-    for (int i = 0; i < NUM_OF_TILES; ++i) {
-        //std::string tmp(sprite_paths[i]);
-        std::cout << sprite_paths[i] << std::endl;
-        Image *tmp = new Image(sprite_paths[i]);
-        tile_sprites[i] = tmp;
-
-    }
-
-    //std::cout << tile_sprites[0]->Width() << " " << tile_sprites[0]->Height() << std::endl;
-    //std::cout << tile_sprites[0]->Channels() << " " << tile_sprites[0]->Size() << std::endl;
-
-    Draw();
-
-};
+}
 
 void Level::Draw() {
     for (int y = 0; y < MAP_SIZE; ++y) {

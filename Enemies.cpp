@@ -10,9 +10,7 @@ Trap::Trap(Point pos)
     : coords(pos)
     , inactive(PushSprite("../resources/trap_inactive.png"))
     , active(PushSprite("../resources/trap_active.png"))
-{
-    std::cout << "я родился\n";
-}
+{}
 
 void Trap::Update(Player &player) {
     Point tmp = player.GetCoords();
