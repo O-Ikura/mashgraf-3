@@ -22,6 +22,7 @@ public:
     bool Moved();
     bool IsDead() const { return is_dead; }
     bool IsDiying() const { return diying; }
+    int GetHP() const { return hit_points; }
     void ProcessInput(int dir, std::vector<std::vector<char>> &lvl);
     void Patient() { old_coords = coords; }
     void Draw(Image &screen);
@@ -68,5 +69,17 @@ private:
     //std::vector<Animation*> running;
     //std::vector<Image*> attack;
 };
+
+/*
+class GUI {
+public:
+    GUI();
+
+private:
+    Point hp_pos;
+    std::vector<Image*> numbers;
+
+};*/
+
 
 #endif //MAIN_PLAYER_H

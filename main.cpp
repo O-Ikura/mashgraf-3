@@ -115,6 +115,22 @@ int initGL()
     return 0;
 }
 
+void showHP(const std::vector<Image*> &numbers, int hp, Image &screenBuffer) {
+    int h, d, u;
+    u = hp % 10;
+    hp /= 10;
+    d = hp % 10;
+    hp /= 10;
+    h = hp;
+
+    Point pos{ .x = 20, .y = 20 };
+    numbers[h]->Draw(pos.x, pos.y, screenBuffer);
+    pos.x += numbers[d]->Width();
+    numbers[d]->Draw(pos.x, pos.y, screenBuffer);
+    pos.x += numbers[u]->Width();
+    numbers[u]->Draw(pos.x, pos.y, screenBuffer);
+}
+
 void initLevel(
         int cur_level,
         Level &level,
@@ -130,6 +146,10 @@ void initLevel(
     finish_pos = {level.GetFinishPos()};
     
     //Инициализация врагов
+    for (int i = enemies.size() - 1; i >= 0; --i) {
+        enemies.pop_back();
+    }
+
     auto &tmp = level.GetInfo();
     for (int y = 0; y < MAP_SIZE; ++y) {
         for (int x = 0; x < MAP_SIZE; ++x) {
@@ -181,7 +201,7 @@ int main(int argc, char **argv)
 
     std::vector<std::string> tiles(NUM_OF_TILES);
     tiles[Tile::WALL] = std::string("../resources/tile001.png");
-    tiles[Tile::FLOOR] = std::string("../resources/tile024.png");
+    tiles[Tile::FLOOR] = std::string("../resources/tile034.png");
     tiles[Tile::TRAP] = std::string("../resources/tile034.png");
     tiles[Tile::FINISH] = std::string("../resources/finish.png");
     Level level(tiles);
@@ -196,8 +216,20 @@ int main(int argc, char **argv)
     Point finish_pos;
     std::vector<Enemy*> enemies;
     Player player;
-
     initLevel(cur_level, level, levels, finish_pos, player, enemies);
+
+    std::vector<Image*> numbers({
+            new Image("../resources/number_0.png"),
+            new Image("../resources/number_1.png"),
+            new Image("../resources/number_2.png"),
+            new Image("../resources/number_3.png"),
+            new Image("../resources/number_4.png"),
+            new Image("../resources/number_5.png"),
+            new Image("../resources/number_6.png"),
+            new Image("../resources/number_7.png"),
+            new Image("../resources/number_8.png"),
+            new Image("../resources/number_9.png"),
+    });
 
     Image screenBuffer(WINDOW_WIDTH, WINDOW_HEIGHT, 4);
     //Image background(WINDOW_WIDTH, WINDOW_HEIGHT, 4);
@@ -246,6 +278,8 @@ int main(int argc, char **argv)
             i->Draw(screenBuffer);
         }
         player.Draw(screenBuffer);
+
+        showHP(numbers, player.GetHP(), screenBuffer);
 
         if (player.IsDead()) {
             Image death_msg("../resources/death_msg.png");
