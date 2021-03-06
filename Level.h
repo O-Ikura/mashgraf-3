@@ -5,9 +5,10 @@
 enum Tile {
     WALL,
     FLOOR,
-    TRAP,
     FINISH,
+    TRAP,
     PLAYER,
+    SLIME,
 };
 
 class Level {

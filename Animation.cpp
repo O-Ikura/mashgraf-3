@@ -11,7 +11,7 @@ Animation::Animation(
     , width(frames[0]->Width())
     , height(frames[0]->Height())
 {
-    std::cout << num_of_frames << std::endl;
+    //std::cout << num_of_frames << std::endl;
 }
 
 bool Animation::Draw(int coord_x, int coord_y, Image &screen) {
@@ -24,10 +24,10 @@ bool Animation::Draw(int coord_x, int coord_y, Image &screen) {
     }
 
     if (frame == num_of_frames) {
+        frame = 0;
         if (!inf) {
             return true;
         }
-        frame = 0;
     }
     return false;
 

@@ -9,7 +9,7 @@ Level::Level(const std::vector<std::string> &sprite_paths)
     , tile_sprites(NUM_OF_TILES)
 {
     for (int i = 0; i < NUM_OF_TILES; ++i) {
-        std::cout << sprite_paths[i] << std::endl;
+        //std::cout << sprite_paths[i] << std::endl;
         Image *tmp = new Image(sprite_paths[i]);
         tile_sprites[i] = tmp;
     }
@@ -28,16 +28,14 @@ void Level::ReadFromFile(const std::string &a_path) {
             case '@':
                 start_pos.x = x * tileSize;
                 start_pos.y = y * tileSize;
+            case 'S':
+            case 'T':
             case '.':
                 lvl[x][y] = Tile::FLOOR;
                 break;
             
             case '#':
                 lvl[x][y] = Tile::WALL;
-                break;
-            
-            case 'T':
-                lvl[x][y] = Tile::TRAP;
                 break;
             
             case 'X':

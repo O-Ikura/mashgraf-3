@@ -27,6 +27,8 @@ public:
     void Patient() { old_coords = coords; }
     void Draw(Image &screen);
 
+    void Attack() { attacking = true; }
+
     Point GetCoords() const {
         return {
                 .x = coords.x + spriteSize / 2,
@@ -59,6 +61,7 @@ private:
 
     bool is_dead = false;
     bool diying = false;
+    bool attacking = false;
     bool direction[4];
 
     Image patient;
@@ -66,8 +69,7 @@ private:
     Animation run_right;
     Animation run_left;
     Animation deth_animation;
-    //std::vector<Animation*> running;
-    //std::vector<Image*> attack;
+    Animation attack;
 };
 
 /*

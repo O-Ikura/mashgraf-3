@@ -5,7 +5,7 @@
 #include <iostream>
 
 constexpr int MAP_SIZE = 40;
-constexpr int NUM_OF_TILES = 4;
+constexpr int NUM_OF_TILES = 3;
 
 struct Point
 {
@@ -27,9 +27,9 @@ constexpr Pixel backgroundColor{0, 0, 0, 0};
 
 class Image {
 public:
+    Image(int a_width = 16, int a_height = 16, int a_channels = 4);
     explicit Image(const Image &orig);
     explicit Image(const std::string &a_path);
-    Image(int a_width = 16, int a_height = 16, int a_channels = 4);
 
     int Save(const std::string &a_path);
     void Draw(int coord_x, int coord_y, Image &screen);

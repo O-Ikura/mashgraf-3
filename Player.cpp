@@ -27,8 +27,12 @@ Player::Player(Point pos)
             new Image("../resources/player_death_1.png"),
             new Image("../resources/player_death_2.png"),
             new Image("../resources/player_death_3.png"),
-            //new Image("../resources/death_4.png"),
-            //new Image("../resources/death_5.png")
+        }
+    ))
+    , attack(false, std::vector<Image*>(
+        {
+            new Image("../resources/attack_1.png"),
+            new Image("../resources/attack_2.png"),
         }
     ))
 {}
@@ -107,8 +111,8 @@ void Player::Draw(Image &screen)
     {
         patient.Draw(coords.x, coords.y, screen);
         old_coords = coords;
-        return;
-    } 
+        //return;
+    } else {
 
     if (direction[MovementDir::RIGHT]) {
         run_right.Draw(coords.x, coords.y, screen);
@@ -125,6 +129,12 @@ void Player::Draw(Image &screen)
     else if (direction[MovementDir::DOWN]) {
         run_right.Draw(coords.x, coords.y, screen);
         direction[MovementDir::DOWN] = false;
+    }
+
+    }
+
+    if (attacking) {
+        attacking = !attack.Draw(coords.x - 20, coords.y - 20, screen);
     }
 
     //tmp->Draw(coords.x, coords.y, screen);

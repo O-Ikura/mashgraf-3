@@ -10,6 +10,8 @@
 constexpr GLsizei WINDOW_WIDTH = 40 * tileSize, WINDOW_HEIGHT = 40 * tileSize;
 constexpr int NUM_OF_LEVELS = 3;
 
+//GLfloat last_check = 0;
+
 struct InputState
 {
     bool keys[1024]{};                //массив состояний кнопок - нажата/не нажата
@@ -56,6 +58,28 @@ void processPlayerMovement(Player &player, std::vector<std::vector<char>> &lvl)
         player.ProcessInput(MovementDir::RIGHT, lvl);
     if (!Input.keys[GLFW_KEY_W] && !Input.keys[GLFW_KEY_S] && !Input.keys[GLFW_KEY_A] && !Input.keys[GLFW_KEY_D]) {
         player.Patient();
+    }
+}
+
+GLfloat last_check = 0;
+void processPlayerAttack(Player &player, std::vector<Enemy*> &enemies) {
+    if (!Input.keys[GLFW_KEY_E]) {
+        return;
+    }
+
+    GLfloat cur_check = glfwGetTime();
+    if (cur_check - last_check > 1.0) {
+        last_check = cur_check;
+        player.Attack();
+        for (auto &i: enemies) {
+
+            int delta_x = abs(player.GetCoords().x - i->GetCoords().x);
+            int delta_y = abs(player.GetCoords().y - i->GetCoords().y);
+            if (delta_x < 30 && delta_y < 30) {
+                i->Hit(200);
+            }
+
+        }
     }
 }
 
@@ -110,6 +134,7 @@ int initGL()
     std::cout << "Controls: " << std::endl;
     std::cout << "press right mouse button to capture/release mouse cursor  " << std::endl;
     std::cout << "W, A, S, D - movement  " << std::endl;
+    std::cout << "E - attack  " << std::endl;
     std::cout << "press ESC to exit" << std::endl;
 
     return 0;
@@ -157,6 +182,11 @@ void initLevel(
             {
             case 'T':
                 enemies.push_back(new Trap({.x = x * tileSize, .y = y * tileSize}));
+                break;
+
+            case 'S':
+                enemies.push_back(new Slime({.x = x * tileSize, .y = y * tileSize}));
+                break;
             
             default:
                 break;
@@ -202,7 +232,6 @@ int main(int argc, char **argv)
     std::vector<std::string> tiles(NUM_OF_TILES);
     tiles[Tile::WALL] = std::string("../resources/tile001.png");
     tiles[Tile::FLOOR] = std::string("../resources/tile034.png");
-    tiles[Tile::TRAP] = std::string("../resources/tile034.png");
     tiles[Tile::FINISH] = std::string("../resources/finish.png");
     Level level(tiles);
     std::vector<std::string> levels( {
@@ -216,7 +245,9 @@ int main(int argc, char **argv)
     Point finish_pos;
     std::vector<Enemy*> enemies;
     Player player;
+    //std::cout << "0\n";
     initLevel(cur_level, level, levels, finish_pos, player, enemies);
+    //std::cout << "1\n";
 
     std::vector<Image*> numbers({
             new Image("../resources/number_0.png"),
@@ -238,6 +269,8 @@ int main(int argc, char **argv)
     glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT); GL_CHECK_ERRORS;
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f); GL_CHECK_ERRORS;
 
+    bool had_won = false;
+
     //game loop
     while (!glfwWindowShouldClose(window))
     {
@@ -247,17 +280,19 @@ int main(int argc, char **argv)
         lastFrame = currentFrame;
 
         glfwPollEvents();
-        if (!player.IsDead()) {
+        if (!player.IsDead() && !had_won) {
             processPlayerMovement(player, level.GetMap());
+            processPlayerAttack(player, enemies);
 
             for (auto i: enemies) {
-                i->Update(player);
+                i->Update(player, level.GetMap());
             }
         }
 
         Point tmp = player.GetCoords();
         //std::cout << tmp.x << ' ' << tmp.y << ' ' << finish_pos.x << ' ' << finish_pos.y << '\n';
-        if ((finish_pos.x <= tmp.x) &&
+        if (!had_won &&
+            (finish_pos.x <= tmp.x) &&
             (tmp.x <= finish_pos.x + tileSize) &&
             (finish_pos.y <= tmp.y) &&
             (tmp.y <= finish_pos.y + tileSize)) 
@@ -268,8 +303,7 @@ int main(int argc, char **argv)
                 initLevel(cur_level, level, levels, finish_pos, player, enemies);
             }
             else {
-                Image win_msg("../resources/win_msg.png");
-                win_msg.Draw( (WINDOW_WIDTH - win_msg.Width())/2, (WINDOW_HEIGHT - win_msg.Height())/2, screenBuffer);
+                had_won = true;
             }
             
         }
@@ -284,6 +318,12 @@ int main(int argc, char **argv)
         if (player.IsDead()) {
             Image death_msg("../resources/death_msg.png");
             death_msg.Draw( (WINDOW_WIDTH - death_msg.Width())/2, (WINDOW_HEIGHT - death_msg.Height())/2, screenBuffer);
+        }
+
+        if (had_won) {
+            player.Patient();
+            Image win_msg("../resources/win_msg.png");
+            win_msg.Draw( (WINDOW_WIDTH - win_msg.Width())/2, (WINDOW_HEIGHT - win_msg.Height())/2, screenBuffer);
         }
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); GL_CHECK_ERRORS;
