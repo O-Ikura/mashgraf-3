@@ -270,6 +270,9 @@ int main(int argc, char **argv)
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f); GL_CHECK_ERRORS;
 
     bool had_won = false;
+    bool changing_level;
+    GLfloat first_level_check = 0;
+    Image new_level("../resources/level_compl_msg.png");
 
     //game loop
     while (!glfwWindowShouldClose(window))
@@ -280,7 +283,7 @@ int main(int argc, char **argv)
         lastFrame = currentFrame;
 
         glfwPollEvents();
-        if (!player.IsDead() && !had_won) {
+        if (!player.IsDead() && !had_won && !changing_level) {
             processPlayerMovement(player, level.GetMap());
             processPlayerAttack(player, enemies);
 
@@ -301,6 +304,8 @@ int main(int argc, char **argv)
             cur_level++;
             if (cur_level < NUM_OF_LEVELS) {
                 initLevel(cur_level, level, levels, finish_pos, player, enemies);
+                changing_level = true;
+                first_level_check = glfwGetTime();
             }
             else {
                 had_won = true;
@@ -318,6 +323,13 @@ int main(int argc, char **argv)
         if (player.IsDead()) {
             Image death_msg("../resources/death_msg.png");
             death_msg.Draw( (WINDOW_WIDTH - death_msg.Width())/2, (WINDOW_HEIGHT - death_msg.Height())/2, screenBuffer);
+        }
+
+        if (changing_level) {
+            new_level.Draw((WINDOW_WIDTH - new_level.Width())/2, (WINDOW_HEIGHT - new_level.Height())/2, screenBuffer);
+            if (glfwGetTime() - first_level_check > 2.0) {
+                changing_level = false;
+            }
         }
 
         if (had_won) {
